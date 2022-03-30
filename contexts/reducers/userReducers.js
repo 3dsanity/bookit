@@ -1,4 +1,3 @@
-import { ContentCutOutlined } from '@mui/icons-material';
 import {
   CLEAR_ERRORS,
   USER_LOADED_FAILED,

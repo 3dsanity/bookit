@@ -11,7 +11,6 @@ import {
   USER_REGISTER_SUCCESS,
 } from '../constants/userConstants';
 import absoluteUrl from 'next-absolute-url';
-import { CropLandscapeOutlined } from '@mui/icons-material';
 
 // Register user
 export const registerUser = async (userData, dispatch) => {

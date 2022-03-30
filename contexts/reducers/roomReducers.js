@@ -1,4 +1,3 @@
-import { CollectionsBookmarkOutlined } from '@mui/icons-material';
 import {
   ALL_ROOMS_FAILED,
   ALL_ROOMS_SUCCESS,
