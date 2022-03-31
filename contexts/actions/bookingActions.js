@@ -92,8 +92,6 @@ export const fetchMyBookings = async (req) => {
       r.json()
     );
 
-    console.log(data.bookings);
-
     response.bookings = data?.bookings || [];
   } catch (e) {
     response.error = e.response?.data || 'Unable to fetch data';

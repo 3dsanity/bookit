@@ -27,7 +27,7 @@ export const getServerSideProps = async ({ req, res }) => {
     };
   }
   const data = await fetchMyBookings(req);
-  console.log(data.bookings);
+
   return {
     props: {
       ssrState: { payload: { bookings: data }, type: MY_BOOKINGS_SUCCESS },

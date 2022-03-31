@@ -15,8 +15,10 @@ import { useAppContext } from '../../contexts/state';
 import { useEffect } from 'react/cjs/react.development';
 import { toast } from 'react-toastify';
 import { CHECK_BOOKING_RESET } from '../../contexts/constants/bookingConstants';
+import NewReview from '../review/NewReview';
 
 import getStripe from '../../utils/getStripe';
+import ListReviews from '../review/ListReview';
 
 const RoomDetails = ({ room }) => {
   const router = useRouter();
@@ -90,7 +92,6 @@ const RoomDetails = ({ room }) => {
   //     const response = await fetch('/api/bookings', config);
   //     const data = await response.json();
   //   } catch (e) {
-  //     console.log(e.response);
   //   }
   // };
 
@@ -99,7 +100,7 @@ const RoomDetails = ({ room }) => {
 
     return () => dispatch({ type: CHECK_BOOKING_RESET });
   }, []);
-  console.log('key', process.env.STRIPE_API_KEY);
+
   const bookRoom = async (id, pricePerNight) => {
     setPaymentLoading(true);
 
@@ -115,8 +116,6 @@ const RoomDetails = ({ room }) => {
       const data = await fetch(link, options).then((r) => r.json());
 
       const stripe = await getStripe(process.env.STRIPE_API_KEY);
-
-      console.log({ data });
 
       // redirect
       stripe.redirectToCheckout({ sessionId: data.id });
@@ -233,29 +232,13 @@ const RoomDetails = ({ room }) => {
           </div>
         </div>
 
-        <div className="reviews w-75">
-          <h3>Reviews:</h3>
-          <hr />
-          <div className="review-card my-3">
-            <div className="rating-outer">
-              <div className="rating-inner"></div>
-            </div>
-            <p className="review_user">by John</p>
-            <p className="review_comment">Good Quality</p>
+        <NewReview />
 
-            <hr />
-          </div>
-
-          <div className="review-card my-3">
-            <div className="rating-outer">
-              <div className="rating-inner"></div>
-            </div>
-            <p className="review_user">by John</p>
-            <p className="review_comment">Good Quality</p>
-
-            <hr />
-          </div>
-        </div>
+        {room.reviews && room.reviews.length > 0 ? (
+          <ListReviews reviews={room.reviews} />
+        ) : (
+          <p>No Reviews on this room</p>
+        )}
       </div>
     </>
   );

@@ -29,8 +29,6 @@ export const getServerSideProps = async ({ req, params }) => {
   const { id } = params;
   const data = await fetchMyBooking(id, req);
 
-  console.log({ data });
-
   return {
     props: {
       ssrState: {

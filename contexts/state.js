@@ -18,6 +18,8 @@ const initialState = {
   bookedDates: {},
   bookings: {},
   bookingDetails: {},
+  newReview: {},
+  reviewAvailable: {},
 };
 
 export const AppWrapper = ({ children, ssrState }) => {

@@ -2,8 +2,12 @@ import {
   ALL_ROOMS_FAILED,
   ALL_ROOMS_SUCCESS,
   CLEAR_ERRORS,
+  NEW_REVIEW_FAILED,
   NEW_REVIEW_REQUEST,
   NEW_REVIEW_SUCCESS,
+  REVIEW_AVAILABILITY_FAILED,
+  REVIEW_AVAILABILITY_REQUEST,
+  REVIEW_AVAILABILITY_SUCCESS,
 } from '../constants/roomConstants';
 import absoluteUrl from 'next-absolute-url';
 import { useEffect } from 'react';
@@ -79,11 +83,11 @@ export const newReview = async (review, dispatch) => {
 
     const config = {
       headers: { 'Content-Type': 'application/json' },
-      method: 'POST',
+      method: 'PUT',
       body: JSON.stringify(review),
     };
 
-    const data = fetch('/api/reviews', config).then((r) => r.json());
+    const data = await fetch('/api/reviews', config).then((r) => r.json());
 
     if (data.success) {
       dispatch({
@@ -100,6 +104,26 @@ export const newReview = async (review, dispatch) => {
     dispatch({
       type: NEW_REVIEW_FAILED,
       payload: e.response?.data || 'Unable to create review',
+    });
+  }
+};
+
+export const checkReviewAvailability = async (roomId, dispatch) => {
+  try {
+    dispatch({ type: REVIEW_AVAILABILITY_REQUEST });
+
+    const data = await fetch(
+      `/api/reviews/check_review_availability?roomId=${roomId}`
+    ).then((r) => r.json());
+
+    dispatch({
+      type: REVIEW_AVAILABILITY_SUCCESS,
+      payload: data.isReviewAvailable,
+    });
+  } catch (e) {
+    dispatch({
+      type: REVIEW_AVAILABILITY_FAILED,
+      payload: e.response?.data || 'Unable to post review',
     });
   }
 };
