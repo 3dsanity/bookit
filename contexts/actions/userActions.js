@@ -1,5 +1,8 @@
 import {
   CLEAR_ERRORS,
+  USER_FORGOT_PASSWORD_FAILED,
+  USER_FORGOT_PASSWORD_REQUEST,
+  USER_FORGOT_PASSWORD_SUCCESS,
   USER_LOADED_FAILED,
   USER_LOADED_REQUEST,
   USER_LOADED_SUCCESS,
@@ -9,6 +12,8 @@ import {
   USER_REGISTER_FAILED,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_RESET_PASSWORD_REQUEST,
+  USER_RESET_PASSWORD_SUCCESS,
 } from '../constants/userConstants';
 import absoluteUrl from 'next-absolute-url';
 
@@ -116,6 +121,80 @@ export const updateUserProfile = async (userData, dispatch) => {
 
     dispatch({
       type: USER_LOADED_FAILED,
+      payload: e.response.data.message,
+    });
+  }
+};
+
+//forgot user password
+export const forgotPassword = async (email, dispatch) => {
+  try {
+    dispatch({ type: USER_FORGOT_PASSWORD_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    };
+
+    const response = await fetch('/api/password/forgot', config);
+    const data = await response.json();
+
+    if (data.success) {
+      dispatch({
+        type: USER_FORGOT_PASSWORD_SUCCESS,
+        payload: data.message,
+      });
+    } else {
+      dispatch({
+        type: USER_FORGOT_PASSWORD_FAILED,
+        payload: data.message,
+      });
+    }
+  } catch (e) {
+    console.log({ e });
+
+    dispatch({
+      type: USER_FORGOT_PASSWORD_FAILED,
+      payload: e.response.data.message,
+    });
+  }
+};
+
+//reset user password
+export const resetPassword = async (token, passwords, dispatch) => {
+  try {
+    dispatch({ type: USER_RESET_PASSWORD_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+      body: JSON.stringify({ passwords }),
+    };
+
+    const response = await fetch(`/api/password/reset/${token}`, config);
+    const data = await response.json();
+
+    if (data.success) {
+      dispatch({
+        type: USER_RESET_PASSWORD_SUCCESS,
+        payload: data.success,
+      });
+    } else {
+      dispatch({
+        type: USER_RESET_PASSWORD_FAILED,
+        payload: data.message,
+      });
+    }
+  } catch (e) {
+    console.log({ e });
+
+    dispatch({
+      type: USER_RESET_PASSWORD_FAILED,
       payload: e.response.data.message,
     });
   }

@@ -1,5 +1,5 @@
 import { allRoomsReducer, roomsDetailsReducer } from './roomReducers';
-import { authReducer } from './userReducers';
+import { authReducer, forgotPasswordReducer } from './userReducers';
 
 function combineReducers(slices) {
   return (state, action) =>
@@ -16,6 +16,7 @@ const reducers = {
   allRooms: allRoomsReducer,
   roomDetails: roomsDetailsReducer,
   auth: authReducer,
+  forgotPassword: forgotPasswordReducer,
 };
 
 export default combineReducers(reducers);

@@ -9,7 +9,12 @@ import reducers from './reducers';
 
 const AppContext = createContext();
 
-const initialState = { roomDetails: {}, allRooms: [], auth: {} };
+const initialState = {
+  roomDetails: {},
+  allRooms: [],
+  auth: {},
+  forgotPassword: {},
+};
 
 export const AppWrapper = ({ children, ssrState }) => {
   const didMount = useRef(false);
