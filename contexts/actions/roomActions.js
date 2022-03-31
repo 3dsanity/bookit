@@ -2,6 +2,8 @@ import {
   ALL_ROOMS_FAILED,
   ALL_ROOMS_SUCCESS,
   CLEAR_ERRORS,
+  NEW_REVIEW_REQUEST,
+  NEW_REVIEW_SUCCESS,
 } from '../constants/roomConstants';
 import absoluteUrl from 'next-absolute-url';
 import { useEffect } from 'react';
@@ -69,6 +71,37 @@ export const fetchRoom = async (req, id) => {
     response.error = e.response?.data || 'Unable to fetch data';
   }
   return response.data;
+};
+
+export const newReview = async (review, dispatch) => {
+  try {
+    dispatch({ type: NEW_REVIEW_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify(review),
+    };
+
+    const data = fetch('/api/reviews', config).then((r) => r.json());
+
+    if (data.success) {
+      dispatch({
+        type: NEW_REVIEW_SUCCESS,
+        payload: data.success,
+      });
+    } else {
+      dispatch({
+        type: NEW_REVIEW_FAILED,
+        payload: data.message,
+      });
+    }
+  } catch (e) {
+    dispatch({
+      type: NEW_REVIEW_FAILED,
+      payload: e.response?.data || 'Unable to create review',
+    });
+  }
 };
 
 export const clearError = () => async () => {

@@ -4,7 +4,11 @@ import {
   bookingsReducer,
   checkBookingReducer,
 } from './bookingReducers';
-import { allRoomsReducer, roomsDetailsReducer } from './roomReducers';
+import {
+  allRoomsReducer,
+  newReviewReducer,
+  roomsDetailsReducer,
+} from './roomReducers';
 import { authReducer, forgotPasswordReducer } from './userReducers';
 
 function combineReducers(slices) {
@@ -27,6 +31,7 @@ const reducers = {
   bookedDates: bookedDatesReducer,
   bookings: bookingsReducer,
   bookingDetails: bookingDetailsReducer,
+  newReview: newReviewReducer,
 };
 
 export default combineReducers(reducers);

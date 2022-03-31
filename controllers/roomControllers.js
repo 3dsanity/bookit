@@ -86,4 +86,51 @@ const deleteRoom = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-export { allRooms, newRoom, getSingleRoom, updateRoom, deleteRoom };
+// create a new review => /api/review
+const createRoomReview = catchAsyncErrors(async (req, res, next) => {
+  const { rating, comment, roomId } = req.body;
+
+  const review = {
+    user: req.user._id,
+    name: req.user.name,
+    rating: Number(rating),
+    comment,
+  };
+
+  const room = await Room.findById(roomId);
+
+  const isReviewed = room.reviews.find(
+    (r) => r.user.toString() === req.user._id.toString()
+  );
+
+  if (isReviewed) {
+    room.reviews.forEach((review) => {
+      if (review.user.toString() === req.user._id.toString()) {
+        review.comment = comment;
+        review.rating = rating;
+      }
+    });
+  } else {
+    room.reviews.push(review);
+    room.numOfReviews = room.review.length;
+  }
+
+  room.ratings =
+    room.reviews.reduce((acc, item) => item.rating + acc, 0) /
+    room.reviews.length;
+
+  await room.save({ validateBeforeSave: false });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
+export {
+  allRooms,
+  newRoom,
+  getSingleRoom,
+  updateRoom,
+  deleteRoom,
+  createRoomReview,
+};
