@@ -14,6 +14,9 @@ import { useRouter } from 'next/router';
 import { useAppContext } from '../../contexts/state';
 import { useEffect } from 'react/cjs/react.development';
 import { toast } from 'react-toastify';
+import { CHECK_BOOKING_RESET } from '../../contexts/constants/bookingConstants';
+
+import getStripe from '../../utils/getStripe';
 
 const RoomDetails = ({ room }) => {
   const router = useRouter();
@@ -21,6 +24,7 @@ const RoomDetails = ({ room }) => {
   const [checkInDate, setCheckInDate] = useState();
   const [checkOutDate, setCheckOutDate] = useState();
   const [daysOfStay, setDaysOfStay] = useState();
+  const [paymentLoading, setPaymentLoading] = useState(false);
 
   const {
     dispatch,
@@ -61,40 +65,69 @@ const RoomDetails = ({ room }) => {
     excludedDates.push(new Date(date));
   });
 
-  const newBookingHandler = async () => {
-    const bookingData = {
-      room: router.query.id,
-      checkInDate,
-      checkOutDate,
-      daysOfStay,
-      amountPaid: 90,
-      paymentInfo: {
-        id: 'STRIPE_PAYMENT_ID',
-        status: 'STRIPE_PAYMENT_STATUS',
-      },
-    };
+  // const newBookingHandler = async () => {
+  //   const bookingData = {
+  //     room: router.query.id,
+  //     checkInDate,
+  //     checkOutDate,
+  //     daysOfStay,
+  //     amountPaid: 90,
+  //     paymentInfo: {
+  //       id: 'STRIPE_PAYMENT_ID',
+  //       status: 'STRIPE_PAYMENT_STATUS',
+  //     },
+  //   };
 
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        method: 'POST',
-        body: JSON.stringify(bookingData),
-      };
+  //   try {
+  //     const config = {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       method: 'POST',
+  //       body: JSON.stringify(bookingData),
+  //     };
 
-      const response = await fetch('/api/bookings', config);
-      const data = await response.json();
-
-      console.log({ data });
-    } catch (e) {
-      console.log(e.response);
-    }
-  };
+  //     const response = await fetch('/api/bookings', config);
+  //     const data = await response.json();
+  //   } catch (e) {
+  //     console.log(e.response);
+  //   }
+  // };
 
   useEffect(() => {
     getBookedDates(id, dispatch);
+
+    return () => dispatch({ type: CHECK_BOOKING_RESET });
   }, []);
+  console.log('key', process.env.STRIPE_API_KEY);
+  const bookRoom = async (id, pricePerNight) => {
+    setPaymentLoading(true);
+
+    const amount = pricePerNight * daysOfStay;
+
+    try {
+      const link = `/api/checkout_session/${id}?checkInDate=${checkInDate.toISOString()}&checkOutDate=${checkOutDate.toISOString()}&amount=${amount}&daysOfStay=${daysOfStay}`;
+
+      const options = {
+        'Content-Type': 'application/json',
+      };
+
+      const data = await fetch(link, options).then((r) => r.json());
+
+      const stripe = await getStripe(process.env.STRIPE_API_KEY);
+
+      console.log({ data });
+
+      // redirect
+      stripe.redirectToCheckout({ sessionId: data.id });
+
+      setPaymentLoading(false);
+    } catch (e) {
+      setPaymentLoading(false);
+      console.log({ e });
+      toast.error(e.message);
+    }
+  };
 
   return (
     <>
@@ -190,8 +223,8 @@ const RoomDetails = ({ room }) => {
               {available && user && (
                 <button
                   className="btn btn-block py-3 booking-btn"
-                  onClick={newBookingHandler}
-                  disabled={bookingLoading ? true : false}
+                  onClick={() => bookRoom(room._id, room.pricePerNight)}
+                  disabled={bookingLoading || paymentLoading ? true : false}
                 >
                   Pay - ${daysOfStay * room.pricePerNight}
                 </button>

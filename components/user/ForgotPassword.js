@@ -14,8 +14,6 @@ const ForgotPassword = () => {
     },
   } = useAppContext();
 
-  console.log({ rest }, { error });
-
   const router = useRouter();
   const [email, setEmail] = useState('');
 

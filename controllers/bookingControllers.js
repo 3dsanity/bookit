@@ -5,6 +5,8 @@ import catchAsyncErrors from '../middlewares/catchAsyncErrors';
 
 import Moment from 'moment';
 import { extendMoment } from 'moment-range';
+import Room from '../models/room';
+import User from '../models/user';
 
 const moment = extendMoment(Moment);
 
@@ -98,4 +100,48 @@ const checkBookedDatesForRoom = catchAsyncErrors(async (req, res) => {
   });
 });
 
-export { newBooking, checkRoomBookingAvailability, checkBookedDatesForRoom };
+// get all bookings for current user  -> /api/bookings/me
+const myBookings = catchAsyncErrors(async (req, res) => {
+  const bookings = await Booking.find({ user: req.user._id })
+    .populate({
+      path: 'room',
+      select: 'name pricePerNight images',
+    })
+    .populate({
+      path: 'user',
+      select: 'name email',
+    });
+
+  res.status(200).json({
+    success: true,
+    bookings,
+  });
+});
+
+// get booking details -> /api/bookings/:id
+const getBookingDetails = catchAsyncErrors(async (req, res) => {
+  const booking = await Booking.findById(req.query.id)
+    .populate({
+      path: 'room',
+      select: 'name pricePerNight images',
+      model: Room,
+    })
+    .populate({
+      path: 'user',
+      select: 'name email',
+      model: User,
+    });
+
+  res.status(200).json({
+    success: true,
+    booking,
+  });
+});
+
+export {
+  newBooking,
+  checkRoomBookingAvailability,
+  checkBookedDatesForRoom,
+  myBookings,
+  getBookingDetails,
+};

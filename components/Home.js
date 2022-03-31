@@ -9,8 +9,6 @@ const Home = () => {
   const router = useRouter();
   const context = useAppContext();
 
-  // console.log({ context });
-
   const {
     state: {
       allRooms: { rooms = [], resPerPage, roomsCount, filteredRoomsCount },

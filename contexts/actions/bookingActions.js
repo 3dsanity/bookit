@@ -1,3 +1,4 @@
+import absoluteUrl from 'next-absolute-url';
 import {
   CHECK_BOOKING_REQUEST,
   CHECK_BOOKING_SUCCESS,
@@ -6,6 +7,7 @@ import {
   CLEAR_ERRORS,
   BOOKED_DATES_SUCCESS,
   BOOKED_DATES_FAIL,
+  MY_BOOKINGS_SUCCESS,
 } from '../constants/bookingConstants';
 
 // export const getRooms = (req) => async (dispatch) => {
@@ -68,4 +70,60 @@ export const getBookedDates = async (id, dispatch) => {
       payload: e.response.data.message,
     });
   }
+};
+
+export const fetchMyBookings = async (req) => {
+  const response = {
+    success: true,
+    message: 'Pre-Data fetch',
+    error: null,
+    bookings: [],
+  };
+  try {
+    const {
+      headers: { cookie },
+    } = req;
+    const config = {
+      'Content-Type': 'application/json',
+      headers: { cookie },
+    };
+    const { origin } = absoluteUrl(req);
+    const data = await fetch(`${origin}/api/bookings/me`, config).then((r) =>
+      r.json()
+    );
+
+    console.log(data.bookings);
+
+    response.bookings = data?.bookings || [];
+  } catch (e) {
+    response.error = e.response?.data || 'Unable to fetch data';
+  }
+
+  return response;
+};
+
+export const fetchMyBooking = async (id, req) => {
+  const response = {
+    success: true,
+    message: 'Pre-Data fetch',
+    error: null,
+    bookings: [],
+  };
+  try {
+    const { headers } = req;
+    const config = {
+      'Content-Type': 'application/json',
+      headers,
+    };
+    const { origin } = absoluteUrl(req);
+    const data = await fetch(`${origin}/api/bookings/${id}`, config).then((r) =>
+      r.json()
+    );
+
+    response.booking = data?.booking || {};
+  } catch (e) {
+    response.error = e.response?.data || 'Unable to fetch data';
+  }
+
+  return response;
 };

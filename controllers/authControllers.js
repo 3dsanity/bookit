@@ -107,13 +107,11 @@ const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const message = `Your password reset token url is as follows:\n\n${resetUrl}\n\nIf you have not requested this email, please ignore it.`;
 
   try {
-    console.log('before send');
     await sendEmail({
       to: user.email,
       subject: 'BookIT Password Recovery',
       text: message,
     });
-    console.log('after send');
 
     res.status(200).json({
       success: true,
@@ -134,8 +132,6 @@ const resetPassword = catchAsyncErrors(async (req, res, next) => {
     .createHash('sha256')
     .update(req.query.token)
     .digest('hex');
-
-  console.log(req.body);
 
   const user = await User.findOne({
     resetPasswordToken,

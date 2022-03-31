@@ -16,6 +16,8 @@ const initialState = {
   forgotPassword: {},
   checkBooking: {},
   bookedDates: {},
+  bookings: {},
+  bookingDetails: {},
 };
 
 export const AppWrapper = ({ children, ssrState }) => {
@@ -30,11 +32,6 @@ export const AppWrapper = ({ children, ssrState }) => {
       const { type, payload } = ssrState;
 
       const keys = Object.keys(payload).map((el) => el);
-
-      console.log({
-        type,
-        payload: payload[keys[0]],
-      });
 
       dispatch({
         type,

@@ -7,11 +7,8 @@ import {
 } from '../constants/roomConstants';
 
 export const allRoomsReducer = (state = { rooms: [] }, action) => {
-  console.log({ action });
-
   switch (action.type) {
     case ALL_ROOMS_SUCCESS:
-      console.log('ALL_ROOMS_SUCCESS', action.payload);
       return {
         roomsCount: action.payload.roomsCount,
         resPerPage: action.payload.resPerPage,
@@ -20,7 +17,6 @@ export const allRoomsReducer = (state = { rooms: [] }, action) => {
       };
 
     case ALL_ROOMS_FAILED:
-      console.log('ALL_ROOMS_FAILED', action.payload);
       return { error: action.payload };
 
     case CLEAR_ERRORS:
