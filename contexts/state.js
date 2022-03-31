@@ -14,6 +14,8 @@ const initialState = {
   allRooms: [],
   auth: {},
   forgotPassword: {},
+  checkBooking: {},
+  bookedDates: {},
 };
 
 export const AppWrapper = ({ children, ssrState }) => {

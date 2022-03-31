@@ -13,6 +13,8 @@
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.29.0",
     "framer-motion": "^6.2.8",
+    "moment": "^2.29.1",
+    "moment-range": "^4.0.2",
     "mongoose": "^6.2.9",
     "next": "12.1.2",
     "next-absolute-url": "^1.2.2",
