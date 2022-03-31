@@ -135,6 +135,8 @@ const resetPassword = catchAsyncErrors(async (req, res, next) => {
     .update(req.query.token)
     .digest('hex');
 
+  console.log(req.body);
+
   const user = await User.findOne({
     resetPasswordToken,
     resetPassword: { $gt: Date.now() },
@@ -147,7 +149,7 @@ const resetPassword = catchAsyncErrors(async (req, res, next) => {
   }
 
   if (req.body.password !== req.body.confirmPassword) {
-    new ErrorHandler('Password does not match', 400);
+    return next(new ErrorHandler('Password does not match', 400));
   }
 
   // setup the new password

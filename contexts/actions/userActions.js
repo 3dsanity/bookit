@@ -12,6 +12,7 @@ import {
   USER_REGISTER_FAILED,
   USER_REGISTER_REQUEST,
   USER_REGISTER_SUCCESS,
+  USER_RESET_PASSWORD_FAILED,
   USER_RESET_PASSWORD_REQUEST,
   USER_RESET_PASSWORD_SUCCESS,
 } from '../constants/userConstants';
@@ -172,8 +173,8 @@ export const resetPassword = async (token, passwords, dispatch) => {
       headers: {
         'Content-Type': 'application/json',
       },
-      method: 'POST',
-      body: JSON.stringify({ passwords }),
+      method: 'PUT',
+      body: JSON.stringify(passwords),
     };
 
     const response = await fetch(`/api/password/reset/${token}`, config);
