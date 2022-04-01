@@ -2,18 +2,23 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import { MDBDataTable } from 'mdbreact';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 import Loader from '../layout/Loader';
 import { useAppContext } from '../../contexts/state';
-import { getAdminRooms } from '../../contexts/actions/roomActions';
+import { getAdminRooms, deleteRoom } from '../../contexts/actions/roomActions';
+import { DELETE_ROOM_RESET } from '../../contexts/constants/roomConstants';
 
 const AllRooms = () => {
   const {
     dispatch,
     state: {
       allRooms: { rooms, error, loading },
+      room: { error: deleteError, isDeleted },
     },
   } = useAppContext();
+
+  const router = useRouter();
 
   useEffect(() => {
     getAdminRooms(dispatch);
@@ -22,7 +27,16 @@ const AllRooms = () => {
       toast.error(error);
       // dispatch(clearErrors());
     }
-  }, [dispatch]);
+
+    if (deleteError) {
+      toast.error(deleteError);
+    }
+
+    if (isDeleted) {
+      router.push('/admin/rooms');
+      dispatch({ type: DELETE_ROOM_RESET });
+    }
+  }, [dispatch, deleteError, error, isDeleted]);
 
   const setRooms = () => {
     const data = {
@@ -82,6 +96,10 @@ const AllRooms = () => {
         });
       });
     return data;
+  };
+
+  const deleteRoomHandler = (id) => {
+    deleteRoom(id, dispatch);
   };
 
   return (

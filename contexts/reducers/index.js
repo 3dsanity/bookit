@@ -1,6 +1,7 @@
 import {
   bookedDatesReducer,
   bookingDetailsReducer,
+  bookingReducer,
   bookingsReducer,
   checkBookingReducer,
 } from './bookingReducers';
@@ -34,6 +35,7 @@ const reducers = {
   checkBooking: checkBookingReducer,
   bookedDates: bookedDatesReducer,
   bookings: bookingsReducer,
+  booking: bookingReducer,
   bookingDetails: bookingDetailsReducer,
   newReview: newReviewReducer,
   reviewAvailable: checkReviewReducer,

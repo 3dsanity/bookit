@@ -138,10 +138,47 @@ const getBookingDetails = catchAsyncErrors(async (req, res) => {
   });
 });
 
+// admin route - /api/admin/bookings
+const getAllBookings = catchAsyncErrors(async (req, res) => {
+  const bookings = await Booking.find()
+    .populate({
+      path: 'room',
+      select: 'name pricePerNight images',
+      model: Room,
+    })
+    .populate({
+      path: 'user',
+      select: 'name email',
+      model: User,
+    });
+
+  res.status(200).json({
+    success: true,
+    bookings,
+  });
+});
+
+// Delete booking - ADMIN => /api/admin/bookings/id
+const deleteBooking = catchAsyncErrors(async (req, res, next) => {
+  const booking = await Booking.findById(req.query.id);
+
+  if (!booking) {
+    return next(new ErrorHandler('Booking not found with this ID', 404));
+  }
+
+  await booking.remove();
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
 export {
   newBooking,
   checkRoomBookingAvailability,
   checkBookedDatesForRoom,
   myBookings,
   getBookingDetails,
+  getAllBookings,
+  deleteBooking,
 };

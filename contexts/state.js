@@ -17,6 +17,7 @@ const initialState = {
   checkBooking: {},
   bookedDates: {},
   bookings: {},
+  booking: {},
   bookingDetails: {},
   newReview: {},
   reviewAvailable: {},

@@ -8,6 +8,12 @@ import {
   BOOKED_DATES_SUCCESS,
   BOOKED_DATES_FAIL,
   MY_BOOKINGS_SUCCESS,
+  ADMIN_BOOKINGS_SUCCESS,
+  ADMIN_BOOKINGS_FAILED,
+  ADMIN_BOOKINGS_REQUEST,
+  DELETE_BOOKING_REQUEST,
+  DELETE_BOOKING_SUCCESS,
+  DELETE_BOOKING_FAILED,
 } from '../constants/bookingConstants';
 
 // export const getRooms = (req) => async (dispatch) => {
@@ -124,4 +130,45 @@ export const fetchMyBooking = async (id, req) => {
   }
 
   return response;
+};
+
+export const getAdminBookings = async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_BOOKINGS_REQUEST });
+
+    const data = await fetch(`/api/admin/bookings`).then((r) => r.json());
+
+    dispatch({
+      type: ADMIN_BOOKINGS_SUCCESS,
+      payload: data.bookings,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_BOOKINGS_FAILED,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+export const deleteBooking = async (id, dispatch) => {
+  try {
+    dispatch({ type: DELETE_BOOKING_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'DELETE',
+    };
+
+    const data = await fetch(`/api/bookings/${id}`).then((r) => r.json());
+
+    dispatch({
+      type: DELETE_BOOKING_SUCCESS,
+      payload: data.success,
+    });
+  } catch (error) {
+    dispatch({
+      type: DELETE_BOOKING_FAILED,
+      payload: error.response.data.message,
+    });
+  }
 };

@@ -17,6 +17,9 @@ import {
   UPDATE_ROOM_FAILED,
   UPDATE_ROOM_REQUEST,
   UPDATE_ROOM_SUCCESS,
+  DELETE_ROOM_FAILED,
+  DELETE_ROOM_REQUEST,
+  DELETE_ROOM_SUCCESS,
 } from '../constants/roomConstants';
 import absoluteUrl from 'next-absolute-url';
 import { useEffect } from 'react';
@@ -220,7 +223,32 @@ export const updateRoom = async (id, roomData, dispatch) => {
 
     dispatch({
       type: UPDATE_ROOM_FAILED,
-      payload: e.response?.data || 'Unable to create room',
+      payload: e.response?.data || 'Unable to update room',
+    });
+  }
+};
+
+export const deleteRoom = async (id, dispatch) => {
+  try {
+    dispatch({ type: DELETE_ROOM_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'DELETE',
+    };
+
+    const data = await fetch(`/api/rooms/${id}`, config).then((r) => r.json());
+
+    dispatch({
+      type: DELETE_ROOM_SUCCESS,
+      payload: data.success,
+    });
+  } catch (e) {
+    console.log({ e });
+
+    dispatch({
+      type: DELETE_ROOM_FAILED,
+      payload: e.response?.data || 'Unable to delete room',
     });
   }
 };
