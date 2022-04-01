@@ -17,4 +17,12 @@ handler.get(getSingleRoom);
 handler.use(isAuthenticatedUser, authorizeRoles('admin')).put(updateRoom);
 handler.use(isAuthenticatedUser, authorizeRoles('admin')).delete(deleteRoom);
 
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '20mb', // Set desired value here
+    },
+  },
+};
+
 export default handler;

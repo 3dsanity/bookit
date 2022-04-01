@@ -14,6 +14,9 @@ import {
   REVIEW_AVAILABILITY_FAILED,
   REVIEW_AVAILABILITY_REQUEST,
   REVIEW_AVAILABILITY_SUCCESS,
+  UPDATE_ROOM_FAILED,
+  UPDATE_ROOM_REQUEST,
+  UPDATE_ROOM_SUCCESS,
 } from '../constants/roomConstants';
 import absoluteUrl from 'next-absolute-url';
 import { useEffect } from 'react';
@@ -74,7 +77,8 @@ export const fetchRoom = async (req, id) => {
 
   try {
     const { origin } = absoluteUrl(req);
-    const res = await fetch(`${origin}/api/rooms/${id}`);
+
+    const res = await fetch(`${req ? origin : ''}/api/rooms/${id}`);
 
     response.data = res.json() || [];
   } catch (e) {
