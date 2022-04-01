@@ -1,10 +1,16 @@
 import {
+  ADMIN_ROOMS_FAILED,
+  ADMIN_ROOMS_REQUEST,
+  ADMIN_ROOMS_SUCCESS,
   ALL_ROOMS_FAILED,
   ALL_ROOMS_SUCCESS,
   CLEAR_ERRORS,
   NEW_REVIEW_FAILED,
   NEW_REVIEW_REQUEST,
   NEW_REVIEW_SUCCESS,
+  NEW_ROOM_FAILED,
+  NEW_ROOM_REQUEST,
+  NEW_ROOM_SUCCESS,
   REVIEW_AVAILABILITY_FAILED,
   REVIEW_AVAILABILITY_REQUEST,
   REVIEW_AVAILABILITY_SUCCESS,
@@ -124,6 +130,93 @@ export const checkReviewAvailability = async (roomId, dispatch) => {
     dispatch({
       type: REVIEW_AVAILABILITY_FAILED,
       payload: e.response?.data || 'Unable to post review',
+    });
+  }
+};
+
+// Get all rooms - ADMIN
+export const getAdminRooms = async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_ROOMS_REQUEST });
+
+    const data = await fetch(`/api/admin/rooms`).then((r) => r.json());
+
+    dispatch({
+      type: ADMIN_ROOMS_SUCCESS,
+      payload: data.rooms,
+    });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_ROOMS_FAILED,
+      payload: error.response.data.message,
+    });
+  }
+};
+
+// create new room action
+export const newRoom = async (newRoom, dispatch) => {
+  try {
+    dispatch({ type: NEW_ROOM_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      body: JSON.stringify(newRoom),
+    };
+
+    const data = await fetch('/api/rooms', config).then((r) => r.json());
+
+    if (data.success) {
+      dispatch({
+        type: NEW_ROOM_SUCCESS,
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: NEW_ROOM_FAILED,
+        payload: data.message,
+      });
+    }
+  } catch (e) {
+    console.log({ e });
+
+    dispatch({
+      type: NEW_ROOM_FAILED,
+      payload: e.response?.data || 'Unable to create room',
+    });
+  }
+};
+
+// update room
+export const updateRoom = async (id, roomData, dispatch) => {
+  try {
+    dispatch({ type: UPDATE_ROOM_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'PUT',
+      body: JSON.stringify(roomData),
+    };
+
+    const data = await fetch(`/api/rooms/${id}`, config).then((r) => r.json());
+
+    if (data.success) {
+      dispatch({
+        type: UPDATE_ROOM_SUCCESS,
+        payload: data.success,
+      });
+    } else {
+      dispatch({
+        type: UPDATE_ROOM_FAILED,
+        payload: data.message,
+      });
+    }
+  } catch (e) {
+    console.log({ e });
+
+    dispatch({
+      type: UPDATE_ROOM_FAILED,
+      payload: e.response?.data || 'Unable to create room',
     });
   }
 };

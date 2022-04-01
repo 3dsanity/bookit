@@ -11,7 +11,7 @@ const AppContext = createContext();
 
 const initialState = {
   roomDetails: {},
-  allRooms: [],
+  allRooms: {},
   auth: {},
   forgotPassword: {},
   checkBooking: {},
@@ -20,6 +20,7 @@ const initialState = {
   bookingDetails: {},
   newReview: {},
   reviewAvailable: {},
+  newRoom: {},
 };
 
 export const AppWrapper = ({ children, ssrState }) => {

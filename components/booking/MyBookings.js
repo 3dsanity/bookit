@@ -22,7 +22,7 @@ const MyBookings = () => {
       toast.error(error);
       // dispatch(clearErrors());
     }
-  }, [dispatch]);
+  }, [dispatch, error]);
 
   const setBookings = () => {
     const data = {
