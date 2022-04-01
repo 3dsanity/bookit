@@ -93,7 +93,7 @@ export const bookingsReducer = (state = { bookings: [] }, action) => {
     case ADMIN_BOOKINGS_SUCCESS:
       return {
         loading: false,
-        bookings: action.payload,
+        bookings: action.payload.bookings,
       };
 
     case MY_BOOKINGS_FAILED:

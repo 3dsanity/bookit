@@ -7,7 +7,6 @@ import easyinvoice from 'easyinvoice';
 import { toast } from 'react-toastify';
 
 import { useAppContext } from '../../contexts/state';
-import { registerUser } from '../../contexts/actions/userActions';
 
 const MyBookings = () => {
   const {
@@ -55,6 +54,8 @@ const MyBookings = () => {
       ],
       rows: [],
     };
+
+    console.log({ bookings });
 
     bookings &&
       bookings.forEach((booking) => {

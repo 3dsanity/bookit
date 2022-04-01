@@ -118,6 +118,8 @@ const AllBookings = () => {
   };
 
   const downloadInvoice = async (booking) => {
+    console.log({ booking });
+
     const data = {
       documentTitle: 'Booking INVOICE', //Defaults to INVOICE
       currency: 'USD',

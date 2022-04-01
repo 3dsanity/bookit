@@ -140,7 +140,7 @@ export const getAdminBookings = async (dispatch) => {
 
     dispatch({
       type: ADMIN_BOOKINGS_SUCCESS,
-      payload: data.bookings,
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -159,7 +159,9 @@ export const deleteBooking = async (id, dispatch) => {
       method: 'DELETE',
     };
 
-    const data = await fetch(`/api/bookings/${id}`).then((r) => r.json());
+    const data = await fetch(`/api/bookings/${id}`, config).then((r) =>
+      r.json()
+    );
 
     dispatch({
       type: DELETE_BOOKING_SUCCESS,

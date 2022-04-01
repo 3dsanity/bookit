@@ -14,6 +14,6 @@ const handler = nc({ onError });
 dbConnect();
 
 handler.use(isAuthenticatedUser).get(getBookingDetails);
-handler.use(isAuthenticatedUser, authorizeRoles('admin')).Delete(deleteBooking);
+handler.use(isAuthenticatedUser, authorizeRoles('admin')).delete(deleteBooking);
 
 export default handler;
