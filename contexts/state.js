@@ -23,6 +23,9 @@ const initialState = {
   reviewAvailable: {},
   newRoom: {},
   room: {},
+  allUsers: {},
+  user: {},
+  userDetails: {},
 };
 
 export const AppWrapper = ({ children, ssrState }) => {

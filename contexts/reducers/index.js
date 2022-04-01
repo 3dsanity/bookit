@@ -13,7 +13,12 @@ import {
   roomReducer,
   roomsDetailsReducer,
 } from './roomReducers';
-import { authReducer, forgotPasswordReducer } from './userReducers';
+import {
+  allUsersReducer,
+  authReducer,
+  forgotPasswordReducer,
+  userDetailsReducer,
+} from './userReducers';
 
 function combineReducers(slices) {
   return (state, action) =>
@@ -40,6 +45,8 @@ const reducers = {
   newReview: newReviewReducer,
   reviewAvailable: checkReviewReducer,
   newRoom: newRoomReducer,
+  allUsers: allUsersReducer,
+  userDetails: userDetailsReducer,
 };
 
 export default combineReducers(reducers);

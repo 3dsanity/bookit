@@ -1,5 +1,14 @@
 import {
+  ADMIN_USERS_FAILED,
+  ADMIN_USERS_REQUEST,
+  ADMIN_USERS_SUCCESS,
   CLEAR_ERRORS,
+  UPDATE_USER_FAILED,
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_SUCCESS,
+  USER_DETAILS_FAILED,
+  USER_DETAILS_REQUEST,
+  USER_DETAILS_SUCCESS,
   USER_FORGOT_PASSWORD_FAILED,
   USER_FORGOT_PASSWORD_REQUEST,
   USER_FORGOT_PASSWORD_SUCCESS,
@@ -196,6 +205,88 @@ export const resetPassword = async (token, passwords, dispatch) => {
 
     dispatch({
       type: USER_RESET_PASSWORD_FAILED,
+      payload: e.response.data.message,
+    });
+  }
+};
+
+//get all users as admin
+export const adminGetAllUsers = async (dispatch) => {
+  try {
+    dispatch({ type: ADMIN_USERS_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const data = await fetch(`/api/admin/users`).then((r) => r.json());
+
+    dispatch({
+      type: ADMIN_USERS_SUCCESS,
+      payload: data.users,
+    });
+  } catch (e) {
+    console.log({ e });
+    dispatch({
+      type: ADMIN_USERS_FAILED,
+      payload: e.response.data.message,
+    });
+  }
+};
+
+//get all users as admin
+export const getUserDetails = async (id, dispatch) => {
+  try {
+    dispatch({ type: USER_DETAILS_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const data = await fetch(`/api/admin/users/${id}`).then((r) => r.json());
+
+    dispatch({
+      type: USER_DETAILS_SUCCESS,
+      payload: data.user,
+    });
+  } catch (e) {
+    dispatch({
+      type: USER_DETAILS_FAILED,
+      payload: e.response.data.message,
+    });
+  }
+};
+
+//update user
+export const updateUser = async (id, userData, dispatch) => {
+  try {
+    dispatch({ type: UPDATE_USER_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'PUT',
+      body: JSON.stringify(userData),
+    };
+
+    const data = await fetch(`/api/admin/users/${id}`, config).then((r) =>
+      r.json()
+    );
+
+    console.log({ data });
+
+    dispatch({
+      type: UPDATE_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (e) {
+    dispatch({
+      type: UPDATE_USER_FAILED,
       payload: e.response.data.message,
     });
   }

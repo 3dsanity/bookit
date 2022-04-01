@@ -21,7 +21,8 @@ const BookingDetails = () => {
     }
   }, [dispatch, booking]);
 
-  const isPaid = false;
+  const isPaid =
+    booking && booking.paymentInfo.status === 'paid' ? true : false;
 
   return (
     <div className="container">

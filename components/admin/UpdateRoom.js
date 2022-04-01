@@ -80,9 +80,9 @@ const UpdateRoom = () => {
     }
 
     if (isUpdated) {
-      doFetchRoom(id).then((payload) => {
-        dispatch({ type: ROOM_DETAILS_SUCCESS, payload });
-      });
+      // doFetchRoom(id).then((payload) => {
+      //   dispatch({ type: ROOM_DETAILS_SUCCESS, payload });
+      // });
       router.push('/admin/rooms');
       dispatch({ type: UPDATE_ROOM_RESET });
     }
