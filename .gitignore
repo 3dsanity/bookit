@@ -31,4 +31,5 @@ yarn-error.log*
 # vercel
 .vercel
 
-next.config*
+# next.config*
+utils/seeder.js
