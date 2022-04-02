@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 const rooms = require('../data/rooms');
 
-mongoose.connect(uri, {
+mongoose.connect('mongodb://localhost:27017/bookit', {
   // useNewUrlParser: true,
   // useUnifiedTopography: true,
   // useFindAndModify: true,
