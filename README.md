@@ -1,3 +1,2 @@
-# BookIT - from guide
+# BookIT room checkout app with stripe/react/nextjs/redux/mongodb/cloudinary
 
-BookIT guide altered to use react context instead of redux
