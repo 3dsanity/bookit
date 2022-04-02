@@ -2,8 +2,6 @@ const Room = require('../models/room');
 const mongoose = require('mongoose');
 
 const rooms = require('../data/rooms');
-// const uri =
-//   'mongodb+srv://sanity_bookit:ZOjPf8zzUUy5ALbz@bookit.nheyk.mongodb.net/BookIT?retryWrites=true&w=majority';
 
 mongoose.connect(uri, {
   // useNewUrlParser: true,
