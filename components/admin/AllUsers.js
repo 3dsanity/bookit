@@ -6,7 +6,10 @@ import { useRouter } from 'next/router';
 
 import Loader from '../layout/Loader';
 import { useAppContext } from '../../contexts/state';
-import { adminGetAllUsers } from '../../contexts/actions/userActions';
+import {
+  adminGetAllUsers,
+  deleteUser,
+} from '../../contexts/actions/userActions';
 import { DELETE_ROOM_RESET } from '../../contexts/constants/roomConstants';
 
 const AllRooms = () => {
@@ -14,6 +17,7 @@ const AllRooms = () => {
     dispatch,
     state: {
       allUsers: { users, error, loading },
+      user: { isDeleted, error: deleteError },
     },
   } = useAppContext();
 
@@ -27,11 +31,17 @@ const AllRooms = () => {
       // dispatch(clearErrors());
     }
 
-    // if (isDeleted) {
-    //   router.push('/admin/users');
-    //   dispatch({ type: DELETE_ROOM_RESET });
-    // }
-  }, [dispatch, error, router]);
+    if (deleteError) {
+      toast.error(deleteError);
+      // dispatch(clearErrors());
+    }
+
+    if (isDeleted) {
+      // router.push('/admin/users');
+      toast.success('User Deleted');
+      dispatch({ type: DELETE_ROOM_RESET });
+    }
+  }, [dispatch, error, router, isDeleted, deleteError]);
 
   const setUsers = () => {
     const data = {
@@ -94,7 +104,7 @@ const AllRooms = () => {
   };
 
   const deleteUserHandler = (id) => {
-    // deleteUser(id, dispatch);
+    deleteUser(id, dispatch);
   };
 
   return (

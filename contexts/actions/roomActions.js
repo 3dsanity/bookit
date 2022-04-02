@@ -20,6 +20,12 @@ import {
   DELETE_ROOM_FAILED,
   DELETE_ROOM_REQUEST,
   DELETE_ROOM_SUCCESS,
+  GET_REVIEWS_REQUEST,
+  GET_REVIEWS_SUCCESS,
+  GET_REVIEWS_FAILED,
+  DELETE_REVIEW_REQUEST,
+  DELETE_REVIEW_SUCCESS,
+  DELETE_REVIEW_FAILED,
 } from '../constants/roomConstants';
 import absoluteUrl from 'next-absolute-url';
 import { useEffect } from 'react';
@@ -244,11 +250,59 @@ export const deleteRoom = async (id, dispatch) => {
       payload: data.success,
     });
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: DELETE_ROOM_FAILED,
       payload: e.response?.data || 'Unable to delete room',
+    });
+  }
+};
+
+export const getRoomReviews = async (id, dispatch) => {
+  try {
+    dispatch({ type: GET_REVIEWS_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    const data = await fetch(`/api/reviews/?id=${id}`, config).then((r) =>
+      r.json()
+    );
+
+    dispatch({
+      type: GET_REVIEWS_SUCCESS,
+      payload: data.reviews,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_REVIEWS_FAILED,
+      payload: e.response?.data || 'Unable to delete room',
+    });
+  }
+};
+
+export const deleteReview = async (id, roomId, dispatch) => {
+  try {
+    dispatch({ type: DELETE_REVIEW_REQUEST });
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+      method: 'DELETE',
+    };
+
+    const data = await fetch(
+      `/api/reviews/?id=${id}&roomId=${roomId}`,
+      config
+    ).then((r) => r.json());
+
+    dispatch({
+      type: DELETE_REVIEW_SUCCESS,
+      payload: data.success,
+    });
+  } catch (e) {
+    dispatch({
+      type: DELETE_REVIEW_FAILED,
+      payload: e.response?.data || 'Unable to delete review',
     });
   }
 };

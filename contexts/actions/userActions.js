@@ -3,6 +3,9 @@ import {
   ADMIN_USERS_REQUEST,
   ADMIN_USERS_SUCCESS,
   CLEAR_ERRORS,
+  DELETE_USER_FAILED,
+  DELETE_USER_REQUEST,
+  DELETE_USER_SUCCESS,
   UPDATE_USER_FAILED,
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
@@ -285,8 +288,40 @@ export const updateUser = async (id, userData, dispatch) => {
       payload: data,
     });
   } catch (e) {
+    console.log({ e });
+
     dispatch({
       type: UPDATE_USER_FAILED,
+      payload: e.response.data.message,
+    });
+  }
+};
+
+//get all users as admin
+export const deleteUser = async (id, dispatch) => {
+  try {
+    dispatch({ type: DELETE_USER_REQUEST });
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'DELETE',
+    };
+
+    const data = await fetch(`/api/admin/users/${id}`, config).then((r) =>
+      r.json()
+    );
+
+    dispatch({
+      type: DELETE_USER_SUCCESS,
+      payload: data.success,
+    });
+  } catch (e) {
+    console.log({ e });
+
+    dispatch({
+      type: DELETE_USER_FAILED,
       payload: e.response.data.message,
     });
   }

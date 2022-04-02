@@ -10,7 +10,9 @@ import {
   checkReviewReducer,
   newReviewReducer,
   newRoomReducer,
+  reviewReducer,
   roomReducer,
+  roomReviewsReducer,
   roomsDetailsReducer,
 } from './roomReducers';
 import {
@@ -18,6 +20,7 @@ import {
   authReducer,
   forgotPasswordReducer,
   userDetailsReducer,
+  userReducer,
 } from './userReducers';
 
 function combineReducers(slices) {
@@ -47,6 +50,9 @@ const reducers = {
   newRoom: newRoomReducer,
   allUsers: allUsersReducer,
   userDetails: userDetailsReducer,
+  user: userReducer,
+  roomReviews: roomReviewsReducer,
+  review: reviewReducer,
 };
 
 export default combineReducers(reducers);

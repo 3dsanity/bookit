@@ -2,6 +2,7 @@ import nc from 'next-connect';
 
 import dbConnect from '../../../../config/dbConnect';
 import {
+  deleteUser,
   getUserDetails,
   updateUser,
 } from '../../../../controllers/authControllers';
@@ -19,5 +20,6 @@ dbConnect();
 
 handler.use(isAuthenticatedUser, authorizeRoles('admin')).get(getUserDetails);
 handler.use(isAuthenticatedUser, authorizeRoles('admin')).put(updateUser);
+handler.use(isAuthenticatedUser, authorizeRoles('admin')).delete(deleteUser);
 
 export default handler;
