@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { Carousel } from '../carousel/Carousel';
@@ -12,7 +12,6 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useRouter } from 'next/router';
 import { useAppContext } from '../../contexts/state';
-import { useEffect } from 'react/cjs/react.development';
 import { toast } from 'react-toastify';
 import { CHECK_BOOKING_RESET } from '../../contexts/constants/bookingConstants';
 import NewReview from '../review/NewReview';
