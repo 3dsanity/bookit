@@ -33,6 +33,7 @@ export default NextAuth({
       },
     }),
   ],
+  secret: 'w3E53nzCKrR3KNLJxXYoRcp8hWfO/Jjr1xesMj2g8Ww=',
   callbacks: {
     jwt: async ({ token, user }) => {
       user && (token.user = user);

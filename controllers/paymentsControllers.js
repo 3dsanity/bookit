@@ -86,9 +86,7 @@ const webhookCheckout = catchAsyncErrors(async (req, res) => {
     }
 
     res.status(200).json({ success: true });
-  } catch (e) {
-    console.log('Error in stripe checkout payment => ', { e });
-  }
+  } catch (e) {}
 });
 
 export { stripeCheckoutSession, webhookCheckout };

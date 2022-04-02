@@ -123,7 +123,6 @@ const RoomDetails = ({ room }) => {
       setPaymentLoading(false);
     } catch (e) {
       setPaymentLoading(false);
-      console.log({ e });
       toast.error(e.message);
     }
   };

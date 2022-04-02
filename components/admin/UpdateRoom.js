@@ -42,8 +42,6 @@ const UpdateRoom = () => {
     },
   } = useAppContext();
 
-  console.log({ room });
-
   const router = useRouter();
 
   const { id } = router.query;

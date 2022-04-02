@@ -55,8 +55,6 @@ const MyBookings = () => {
       rows: [],
     };
 
-    console.log({ bookings });
-
     bookings &&
       bookings.forEach((booking) => {
         data.rows.push({

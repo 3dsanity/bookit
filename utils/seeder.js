@@ -18,7 +18,6 @@ const seedRooms = async () => {
 
     process.exit();
   } catch (e) {
-    console.log({ e });
     process.exit();
   }
 };

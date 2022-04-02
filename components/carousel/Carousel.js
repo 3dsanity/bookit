@@ -6,7 +6,7 @@ import {
   PanInfo,
   useMotionValue,
 } from 'framer-motion';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
 
 import Arrow from './arrow';
@@ -59,18 +59,18 @@ export const Carousel = ({
     return controls.stop;
   }, [index, x]);
 
-  useEffect(() => {
-    const handleNext = () => {
-      const idx = loop ? 0 : index;
-      setIndex(index + 1 === children.length ? idx : index + 1);
-    };
+  const handleNext = useCallback(() => {
+    const idx = loop ? 0 : index;
+    setIndex(index + 1 === children.length ? idx : index + 1);
+  }, [children.length, index, loop]);
 
+  useEffect(() => {
     if (!autoPlay) {
       return;
     }
     const timer = setInterval(() => handleNext(), interval);
     return () => clearInterval(timer);
-  }, [interval, autoPlay, children.length, index, loop]);
+  }, [interval, autoPlay, children.length, index, loop, handleNext]);
 
   return (
     <div ref={containerRef} className="custom-carousel">

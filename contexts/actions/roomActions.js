@@ -191,8 +191,6 @@ export const newRoom = async (newRoom, dispatch) => {
       });
     }
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: NEW_ROOM_FAILED,
       payload: e.response?.data || 'Unable to create room',
@@ -225,8 +223,6 @@ export const updateRoom = async (id, roomData, dispatch) => {
       });
     }
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: UPDATE_ROOM_FAILED,
       payload: e.response?.data || 'Unable to update room',

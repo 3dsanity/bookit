@@ -91,8 +91,6 @@ export const loadUser = async (dispatch) => {
       payload: data.user,
     });
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: USER_LOADED_FAILED,
       payload: e.response.data.message,
@@ -130,8 +128,6 @@ export const updateUserProfile = async (userData, dispatch) => {
       payload: data.user,
     });
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: USER_LOADED_FAILED,
       payload: e.response.data.message,
@@ -167,8 +163,6 @@ export const forgotPassword = async (email, dispatch) => {
       });
     }
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: USER_FORGOT_PASSWORD_FAILED,
       payload: e.response.data.message,
@@ -204,8 +198,6 @@ export const resetPassword = async (token, passwords, dispatch) => {
       });
     }
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: USER_RESET_PASSWORD_FAILED,
       payload: e.response.data.message,
@@ -231,7 +223,6 @@ export const adminGetAllUsers = async (dispatch) => {
       payload: data.users,
     });
   } catch (e) {
-    console.log({ e });
     dispatch({
       type: ADMIN_USERS_FAILED,
       payload: e.response.data.message,
@@ -281,15 +272,11 @@ export const updateUser = async (id, userData, dispatch) => {
       r.json()
     );
 
-    console.log({ data });
-
     dispatch({
       type: UPDATE_USER_SUCCESS,
       payload: data,
     });
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: UPDATE_USER_FAILED,
       payload: e.response.data.message,
@@ -318,8 +305,6 @@ export const deleteUser = async (id, dispatch) => {
       payload: data.success,
     });
   } catch (e) {
-    console.log({ e });
-
     dispatch({
       type: DELETE_USER_FAILED,
       payload: e.response.data.message,

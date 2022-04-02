@@ -28,11 +28,7 @@ const UpdateUser = () => {
     },
   } = useAppContext();
 
-  console.log({ isUpdated }, { userRest }, { userDetailsRest });
-
   const userId = router.query.id;
-
-  console.log({ user });
 
   useEffect(() => {
     const doFetchUser = async (id) => {
