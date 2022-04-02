@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
@@ -38,7 +39,7 @@ const Register = () => {
       toast.error(error);
       dispatch(clearError());
     }
-  }, [dispatch, success, error]);
+  }, [dispatch, success, error, router]);
 
   const submitHandler = (e) => {
     e.preventDefault();

@@ -31,8 +31,6 @@ export const Carousel = ({
   const containerRef = useRef(null);
   const [index, setIndex] = useState(0);
 
-  const calculateNewX = () => -index * containerRef.current.clientWidth || 0;
-
   const handleEndDrag = (e, dragProps) => {
     const clientWidth = containerRef.current?.clientWidth || 0;
 
@@ -49,28 +47,30 @@ export const Carousel = ({
 
   const childrens = React.Children.toArray(children);
 
-  const handleNext = () => {
-    const idx = loop ? 0 : index;
-    setIndex(index + 1 === children.length ? idx : index + 1);
-  };
-
   const handlePrev = () => {
     const idx = loop ? childrens.length - 1 : 0;
     setIndex(index - 1 < 0 ? idx : index - 1);
   };
 
   useEffect(() => {
+    const calculateNewX = () => -index * containerRef.current.clientWidth || 0;
+
     const controls = animate(x, calculateNewX(), transition);
     return controls.stop;
-  }, [index]);
+  }, [index, x]);
 
   useEffect(() => {
+    const handleNext = () => {
+      const idx = loop ? 0 : index;
+      setIndex(index + 1 === children.length ? idx : index + 1);
+    };
+
     if (!autoPlay) {
       return;
     }
     const timer = setInterval(() => handleNext(), interval);
     return () => clearInterval(timer);
-  }, [handleNext, interval]);
+  }, [interval, autoPlay, children.length, index, loop]);
 
   return (
     <div ref={containerRef} className="custom-carousel">

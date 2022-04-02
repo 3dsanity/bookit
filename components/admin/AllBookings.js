@@ -43,7 +43,7 @@ const AllBookings = () => {
       router.push('/admin/bookings');
       dispatch({ type: DELETE_BOOKING_RESET });
     }
-  }, [dispatch, deleteError, isDeleted]);
+  }, [dispatch, deleteError, isDeleted, error, router]);
 
   const setBookings = () => {
     const data = {

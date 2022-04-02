@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
@@ -25,11 +26,13 @@ const Header = () => {
         <div className="col-3 p-0">
           <div className="navbar-brand">
             <Link href="/">
-              <img
-                src="/images/bookit_logo.png"
-                alt="BookIT"
-                style={{ cursor: 'pointer' }}
-              />
+              <a>
+                <img
+                  src="/images/bookit_logo.png"
+                  alt="BookIT"
+                  style={{ cursor: 'pointer' }}
+                />
+              </a>
             </Link>
           </div>
         </div>

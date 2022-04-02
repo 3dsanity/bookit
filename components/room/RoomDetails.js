@@ -99,7 +99,7 @@ const RoomDetails = ({ room }) => {
     getBookedDates(id, dispatch);
 
     return () => dispatch({ type: CHECK_BOOKING_RESET });
-  }, []);
+  }, [dispatch, id]);
 
   const bookRoom = async (id, pricePerNight) => {
     setPaymentLoading(true);

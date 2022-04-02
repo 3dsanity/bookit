@@ -36,7 +36,7 @@ const AllRooms = () => {
       router.push('/admin/rooms');
       dispatch({ type: DELETE_ROOM_RESET });
     }
-  }, [dispatch, deleteError, error, isDeleted]);
+  }, [dispatch, deleteError, error, isDeleted, router]);
 
   const setRooms = () => {
     const data = {

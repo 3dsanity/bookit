@@ -6,6 +6,7 @@ import { useAppContext } from '../../contexts/state';
 import { toast } from 'react-toastify';
 import { NEW_ROOM_RESET } from '../../contexts/constants/roomConstants';
 import { newRoom } from '../../contexts/actions/roomActions';
+import Image from 'next/image';
 
 const NewRoom = () => {
   const [name, setName] = useState('');
@@ -270,7 +271,7 @@ const NewRoom = () => {
               </div>
 
               {imagesPreview.map((image) => (
-                <img
+                <Image
                   src={image}
                   key={image}
                   alt="Images Preview"

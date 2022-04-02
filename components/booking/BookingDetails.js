@@ -17,9 +17,9 @@ const BookingDetails = () => {
   useEffect(() => {
     if (error) {
       toast.error(error);
-      dispatch(clearErrors());
+      // dispatch(clearErrors());
     }
-  }, [dispatch, booking]);
+  }, [dispatch, booking, error]);
 
   const isPaid =
     booking && booking.paymentInfo.status === 'paid' ? true : false;

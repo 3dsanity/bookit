@@ -10,6 +10,7 @@ import {
   UPDATE_ROOM_RESET,
 } from '../../contexts/constants/roomConstants';
 import { updateRoom, fetchRoom } from '../../contexts/actions/roomActions';
+import Image from 'next/image';
 
 const UpdateRoom = () => {
   const [name, setName] = useState('');
@@ -323,7 +324,7 @@ const UpdateRoom = () => {
               </div>
 
               {imagesPreview.map((img) => (
-                <img
+                <Image
                   src={img}
                   key={img}
                   alt="Images Preview"
@@ -335,7 +336,7 @@ const UpdateRoom = () => {
 
               {oldImages &&
                 oldImages.map((img) => (
-                  <img
+                  <Image
                     src={img.url}
                     key={img.public_id}
                     alt="Images Preview"
