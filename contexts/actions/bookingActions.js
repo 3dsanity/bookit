@@ -6,7 +6,7 @@ import {
   CHECK_BOOKING_RESET,
   CLEAR_ERRORS,
   BOOKED_DATES_SUCCESS,
-  BOOKED_DATES_FAIL,
+  BOOKED_DATES_FAILED,
   MY_BOOKINGS_SUCCESS,
   ADMIN_BOOKINGS_SUCCESS,
   ADMIN_BOOKINGS_FAILED,
@@ -72,7 +72,7 @@ export const getBookedDates = async (id, dispatch) => {
     });
   } catch (e) {
     dispatch({
-      type: BOOKED_DATES_FAIL,
+      type: BOOKED_DATES_FAILED,
       payload: e.response.data.message,
     });
   }
