@@ -17,7 +17,7 @@ export default NextAuth({
 
         // check if emaill and passoword is entered
         if (!email || !password)
-          throw new Error('Please Eenter email and/or password');
+          throw new Error('Please Enter email and/or password');
 
         // find user in the database
         const user = await User.findOne({ email }).select('+password');

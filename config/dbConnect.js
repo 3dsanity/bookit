@@ -5,8 +5,8 @@ const dbConnect = () => {
     return;
   }
 
-  // mongoose.connect(process.env.DB_LOCAL_URI, {
-  mongoose.connect(process.env.DB_MONGO_URI, {
+  mongoose.connect(process.env.DB_LOCAL_URI, {
+    // mongoose.connect(process.env.DB_MONGO_URI, {
     // useNewUrlParser: true,
     // useUnifiedTopography: true,
     // useFindAndModify: true,
