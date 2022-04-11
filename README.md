@@ -1,4 +1,14 @@
 # BookIT 
 
-room checkout app with stripe/react/nextjs/react-context/mongodb/cloudinary
+room checkout app with 
+
+## Technologies
+Project is created with:
+* React
+* React-Context
+* Next.js
+* Mongodb
+* Stripe
+* Cloudinary
+
 
