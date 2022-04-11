@@ -12,3 +12,10 @@ Project is created with:
 * Cloudinary
 
 
+## Setup
+To run this project, install it locally using npm:
+
+```
+$ npm install
+$ npm run dev
+```
