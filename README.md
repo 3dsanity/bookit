@@ -24,4 +24,4 @@ $ npm run dev
 
 ## Screenshots
 
-![Example screenshot](./git-readmy/Screenshot-2022-04-11-root.png)
+![Example screenshot](./git-readme/Screenshot-2022-04-11-root.png)
