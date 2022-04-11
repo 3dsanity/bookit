@@ -1,6 +1,6 @@
 # BookIT
 
-Next.js application build with back-end, auth, stripe checkout and server-side rendered pages.
+Next.js booking application build with node.js back-end, next-auth (Credentials Provider), stripe checkout and server-side rendered pages.
 
 ## Technologies
 
