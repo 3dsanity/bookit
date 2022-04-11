@@ -1,6 +1,6 @@
 # BookIT
 
-room checkout app with
+Next.js application build with back-end, auth, stripe checkout and server-side rendered pages.
 
 ## Technologies
 
